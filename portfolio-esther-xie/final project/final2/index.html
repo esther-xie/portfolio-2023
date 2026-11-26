@@ -1,0 +1,457 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Final Project Part II: Converge</title><style>body{font:1rem/1.65 system-ui;color:#222;margin:2rem auto;padding:0 1.25rem;max-width:52rem}a{color:#174570}img,iframe{max-width:100%}table{border-collapse:collapse}td,th{border:1px solid #ddd;padding:.4rem}h1,h2,h3{line-height:1.2}</style><nav><a href="../../../index.html#/work/sync">Back to CYNK</a></nav><main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Final Project Part II: Converge
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><div class="author-info"><div class="author-name">
+        <span class="p-name">Team Vowels: Amy Lei, Ivy Mao, Esther Xie, Ophelia Zhu</span>
+      </div>
+    <time class="page-date dt-published" datetime="2022-11-20T22:00:00-05:00"><a class="u-url" href="">November 20, 2022</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  <ul class="page-taxonomies"><li class="page-taxonomy">Final Project</li>
+  </ul>
+
+
+        
+
+      </div>
+
+      <div class="page-content">
+        <div class="e-content">
+          <ul>
+  <li><a href="#pitch">Pitch</a></li>
+  <li><a href="#conceptual-design">Conceptual Design</a></li>
+  <li><a href="#wireframe">Wireframe</a></li>
+  <li><a href="#vsd-analysis">VSD Analysis</a></li>
+  <li><a href="#tradeoffs">Tradeoffs</a></li>
+  <li><a href="#project-plan">Project Plan</a></li>
+</ul>
+
+<h1 id="app-name-standup">App name: Standup</h1>
+
+<h2 id="pitch">Pitch</h2>
+<p>Asynchronously organizing and tracking group project progress can be really difficult. There are countless applications existing for managing team projects. However, none of them are really useful for students working on group projects at school. Firstly, apps like notion and trello are heavy-weighted, requiring a lot of effort to set up. Enterprises usually have a fixed top-down fixed workflow, while student projects have much more diverse structures and students want more freedom in organizing their time. Secondly, traditional planning apps are not as effective for students, as we often find it difficult to hold teammates accountable for checkpoints. Many students simply stop replying to group messages when they are distracted by other things.</p>
+
+<p>Introducing Standup, a unique team project management for students. Our product will provide a platform to encourage more communication and collaboration among students. Unlike traditional enterprise project management apps that require a team manager to set up checkpoints in a top-down manner, Standup encourages students to post their progress as desired either to keep record for themselves, or to call teammates’ attention. Students can post “updates” in a blog format with tags, which can be reviewed and reacted to by teammates. Users can remind their teammates when they haven’t updated their progress for a long time, or require their teammates to react to their updates, in order to keep everyone on track. On the other hand, students are also encouraged to express appreciation towards each others’ work and to learn from each other.</p>
+
+<p>Through encouraging students to review each others’ progress and provide feedback, we believe StandUp can facilitate healthier teamwork among students and create a more participatory learning environment.</p>
+
+<h2 id="conceptual-design">Conceptual design</h2>
+
+<p>Name: Project</p>
+
+<p>Purpose: Overarching folder for updates, and associates with a group of users (teammates)</p>
+
+<p>Operational Principle: When a new project is created, it is associated with one or multiple users. Users can optionally set several dates for required updates, which expect all users to post updates before those dates.</p>
+
+<p>States:</p>
+<ul>
+  <li>project name: Project -&gt; one String</li>
+  <li>active: set Project</li>
+  <li>archived: set Project</li>
+  <li>participants: Project -&gt; set User</li>
+  <li>updates: Project -&gt; set Updates</li>
+  <li>date created: Project -&gt; one Date</li>
+  <li>date archived: Project -&gt; lone Date</li>
+  <li>scheduled updates: Project -&gt; set Date</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>user u creates a project</li>
+  <li>user u edits a project</li>
+  <li>user u archives a project</li>
+  <li>user u joins a project</li>
+  <li>user u quits a project</li>
+</ul>
+
+<hr />
+
+<p>Name: User</p>
+
+<p>Purpose: Authenticate the user, gives users long lasting sessions after the authentication, and remembers user information such as participating projects</p>
+
+<p>Operational Principle: After a user is created, it is associated with the user’s log-in information including user’s full name, password, linked email, participating projects etc. When a person logs in as the user, the app creates the session with all the preferences.</p>
+
+<p>States:</p>
+<ul>
+  <li>firstname: User -&gt; one String</li>
+  <li>lastname: User -&gt; one String</li>
+  <li>password: User -&gt; one String</li>
+  <li>email: User -&gt; one String</li>
+  <li>projects: User -&gt; set Project</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>creates a new user</li>
+  <li>sign in as the user</li>
+  <li>sign out as the user</li>
+  <li>delete the user</li>
+</ul>
+
+<hr />
+
+<p>Name: Update</p>
+
+<p>Purpose: Serve as a standardized unit of progress information</p>
+
+<p>Operational Principle: When a user wants to post work progress they’ve done, they can create an Update containing the information required for each Update. Other users working on the project will then be able to see the Update. The user can also edit their Updates if necessary.</p>
+
+<p>States:</p>
+<ul>
+  <li>dateCreated: Update -&gt; one Date</li>
+  <li>dateModified: Update -&gt; one Date</li>
+  <li>author: Update -&gt; one User</li>
+  <li>summary: Update -&gt; one Text</li>
+  <li>details: Update -&gt; one Text</li>
+  <li>todos: Update -&gt; set Texts</li>
+  <li>blockers: Update -&gt; set Texts</li>
+  <li>status: Update -&gt; one Status (enum)</li>
+  <li>project: Update -&gt; one Project</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>user u posts an update</li>
+  <li>user u edits an update</li>
+  <li>user u deletes an update</li>
+</ul>
+
+<hr />
+
+<p>Name: Comments</p>
+
+<p>Purpose: Allow for further discussion on work that someone did</p>
+
+<p>Operational Principle: User A gave an update. User B wants to offer a suggestion based on their update or ask a question and adds a comment. User A sees this comment when looking at the updates and adds another comment in reply to User B under the same update.</p>
+
+<p>States [Update.Update]:</p>
+<ul>
+  <li>Comment: Update.Update -&gt; set String</li>
+  <li>Author: Comment -&gt; one User.firstname, one  User.lastname</li>
+  <li>Date: Comment -&gt; one Date</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>User creates a comment to an update</li>
+  <li>User deletes a comment to an update</li>
+</ul>
+
+<hr />
+
+<p>Name: Eyes Wanted</p>
+
+<p>Purpose: Allow users to flag or bring immediate attention to certain items</p>
+
+<p>Operational Principle: When a user adds an update to a project, they can flag the update with “eyes wanted”. Now, the other team members of that project will see the update on their feed as part of a reading list. The update is also highlighted when viewed with other updates. Only when that team member views the update and marks it as read does it get unflagged for them.</p>
+
+<p>States [Update.Update]:</p>
+<ul>
+  <li>targetUser: EyesWanted -&gt; set User</li>
+  <li>update: EyesWanted -&gt; one Update.Update</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>user u flags update v with eyesWanted</li>
+  <li>user u dismisses eyesWanted e
+    <ul>
+      <li>allowed only if user u is one of the targetUsers of e</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>Name: Tag</p>
+
+<p>Purpose: Allow users to categorize updates</p>
+
+<p>Operational Principle: When a user creates a project, they can initialize a list of tags to be used. This way, when a team member adds an update to that project, they can select from the list of tags. During creation of an update, if there is a new tag that the user wishes to use, then they can initialize it on the spot, allowing the team to also tag their future updates with it. The user can also edit the set of tags associated with an update after creation. When the user views all of the updates pertaining to a project, they can filter by tags.</p>
+
+<p>States:</p>
+<ul>
+  <li>tags: Project -&gt; set Tags</li>
+  <li>update: Tag -&gt; one Update</li>
+  <li>label: Tag -&gt; one String</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>user u adds tag(s) to project p
+    <ul>
+      <li>allowed only if user u is a collaborator of project i</li>
+    </ul>
+  </li>
+  <li>user u adds tag(s) to update v.
+    <ul>
+      <li>allowed only if user u is a collaborator of the project associated with update v</li>
+      <li>tags are associated with update v.</li>
+      <li>tags are added to the set of all tags.</li>
+    </ul>
+  </li>
+  <li>user u removes tag(s) from update v
+    <ul>
+      <li>allowed only if user u is a collaborator of the project associated with update v</li>
+      <li>tags are disassociated with update v.</li>
+      <li>tags are removed from the set of all tags.</li>
+    </ul>
+  </li>
+  <li>filter on a set of tags
+    <ul>
+      <li>sets currently filtered tag.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>Name: Thanks</p>
+
+<p>Purpose: Show appreciation for teammates who are on top of their work</p>
+
+<p>Operational Principle: After user A posts an update, user B sees the update and appreciates the work that they put in. They give the update a thanks. User A’s total number of thanks increments by one.</p>
+
+<p>States: [Update.Update]</p>
+<ul>
+  <li>thanks: User -&gt; set Update.Update</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>User gives thanks to an update
+    <ul>
+      <li>Allowed if user is not the author of the update</li>
+    </ul>
+  </li>
+  <li>User removes a thanks from an update
+    <ul>
+      <li>Allowed if user issued the thanks</li>
+    </ul>
+  </li>
+  <li>User views the number of thanks they have themselves</li>
+</ul>
+
+<hr />
+
+<p>Name: Poke</p>
+
+<p>Purpose: Remind users to post updates</p>
+
+<p>Operational Principle: User A has not given an update in a week. User B pokes user A for an update. User A gets a popup on their application that reminds them to post an update.</p>
+
+<p>States [User.User]:</p>
+<ul>
+  <li>Poke: User -&gt; one User</li>
+  <li>PokedTime: one Date</li>
+  <li>LastUpdated: User -&gt; one Date</li>
+</ul>
+
+<p>Actions:</p>
+<ul>
+  <li>User pokes another user
+    <ul>
+      <li>Allowed if poked user has not submitted an update to the project in the last 7 days</li>
+    </ul>
+  </li>
+  <li>User gets poke notification</li>
+</ul>
+
+<h2 id="wireframe">Wireframe</h2>
+<!-- ![homepage](/portfolio-esther-xie/assets/images/converge-home.png)
+_Homepage with EyesWanted, Pokes and Thanks_
+ 
+![dashboard](/portfolio-esther-xie/assets/images/converge-filter.png)
+_Project Dashboard that is filterable_
+ 
+![add project](/portfolio-esther-xie/assets/images/converge-add.png)
+_Adding or Accepting Project Invites_
+ 
+![views](/portfolio-esther-xie/assets/images/converge-views.png)
+_Different ways to view updates_
+ 
+![project](/portfolio-esther-xie/assets/images/converge-project.png)
+_Expanding on an update to see all details_
+  -->
+
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&amp;url=https%3A%2F%2Fwww.figma.com%2Ffile%2FGP6BSHV72M5bQnmqoZpXK8%2FStandup%3Fnode-id%3D0%253A1%26t%3DWQBc9RwPr9EpAXIn-1" allowfullscreen=""></iframe>
+
+<h2 id="vsd-analysis">VSD analysis</h2>
+<h4 id="stakeholders-non-targeted-use">Stakeholders: Non-targeted Use</h4>
+<p>Although Standup is intended explicitly for use in group projects, it could very easily be also used in a corporate setting (see Work of the Future section for details!) As with many other productivity-focused apps, Standup could also be used by individuals on personal projects. Furthermore, Standup is essentially a shared, structured blog, so aside from productivity purposes, it could even be used socially as a way for people to stay in touch with their friends, families, or partners that live far away, by using Updates to share new things happening in their lives. 
+Usage in the workplace will likely be similar to usage in group projects, with a major difference being that the number of people working on a project may be much bigger, and people may belong to a lot more projects, depending on the structure of the company. The Project and Tags concepts would help keep teams and tasks organized, and the different views and Eyes Wanted feature would help busy professionals keep up-to-date on multiple Projects they may be involved in.
+For personal use, some of the features (e.g., Thanks, viewing by User) might be a little bit less useful, but also don’t hinder the user’s experience.
+For social use, the structure of an Update lends itself to a bit of a journal format. The Thanks feature could be used to show someone support for what they’ve shared, and the Poke feature could be used in a friendly way to ask how someone is doing.</p>
+<h4 id="stakeholders-direct-stakeholders">Stakeholders: Direct stakeholders</h4>
+<p>Direct stakeholders could include students, TAs/teachers, and (in the case of enterprise use) employees and managers.
+Students and employees are looking to keep up-to-date with the work of their peers, and are interested in being able to easily find relevant and complete information. The Update feature helps standardize and organize progress information.
+Students and employees might be concerned that using Standup will cause their work to be too closely scrutinized. To address this, we’ve done our best to keep our focus on updating our peers on the work we’ve done, rather than monitoring each other (e.g., using the Thanks concept to provide positive reinforcement for updating, rather than providing ways to require daily updates.) 
+TAs, teachers, and managers might wish to join the Projects of their students or employees so they can keep up-to-date on the students’ work. This would be possible simply by creating an account and adding their User to the Project. This might pressure students and employees to be perfect in each update they post, though; we don’t plan to incorporate this into our design since it’s primarily intended for use among peers, but this could be resolved by introducing a new Manager type of role where they only see summaries, or certain Updates intended specifically for managers.</p>
+<h4 id="time-work-of-the-future">Time: Work of the Future</h4>
+<p>Standup tries to address issues of accountability and responsibility, particularly in remote working situations. As a result, we should be careful to prevent its improper use in the workplace, as technology can enable more precise employee monitoring, and we do not want to help foster an unhealthy work environment. We’ve already seen some of these effects taking place with some companies using tracking software (screen monitors, webcam recording, logging hours, etc.), especially during the pandemic, and we want to make sure we contribute to a healthy, productive environment rather than one where employees are surveilled and punished for, say, not making enough updates. To accomplish this, our Thanks feature encourages users to make updates by allowing them to receive appreciation from their peers. While the Poke feature aims to encourage quieter users to update more frequently, nothing is mandatory, and the window for updating is fairly relaxed: you can only Poke a user if they haven’t updated for an entire week, which prevents requirements such as mandated daily updates.</p>
+<h4 id="pervasiveness-widespread-use">Pervasiveness: Widespread Use</h4>
+<p>Since access to Updates is limited to members of a specific Project, the effects of widespread use are less apparent than on a platform where all information is accessible by almost everyone. Given how information shared in updates may be sensitive or considered intellectual property, we chose to not allow updates to be viewable by people outside the organization.
+We also designed user interactions to be relatively insular within a Project, because our use case generally does not involve too much interacting outside of a project group. We could potentially create profiles to allow users to see what Projects other users are part of. If this is public information and Standup becomes widespread, however, people creating Projects for personal use may want to create separate personal and professional accounts to protect their privacy. 
+As more students and employees begin using Standup, they might grow accustomed to using Standup in the place of traditional standup meetings and meeting notes, which would save a lot of time and efficiency in both publishing and referring back to the information.
+The number of users in a Project might become very big for certain organizations, so it’s possible we may start needing organization even with the axes (e.g., there are so many updates for a certain task on a certain day that even scrolling through those can become difficult.) This might be addressed with a search function.
+The number of Projects a user is part of may become very big, if everyone starts using Standup. This may present some organizational problems in finding a specific Project. Being able to access all your Projects from the same account, though, is good for efficiency.
+As the number of Standup users increases, users may also have many completed Projects as well. This is not much of a problem for the average student with one or two group projects per semester, but as we expand into more general use we may want to consider implementing an archiving feature to keep completed Projects out of the way.
+[Ophelia] Tradeoffs. Using the notes that you took during your design process, pick at least 3 design decisions that you made in which you had to choose between multiple options. For each one, provide (a) a pithy title naming the issue; (b) an outline of what the various options were; (c) a rationale for why you chose one option over the others. We expect this to take about a page or two of text and sketches.</p>
+
+<h2 id="tradeoffs">Tradeoffs</h2>
+
+<h4 id="thanks">Thanks?</h4>
+<p>To make Standup a more interactive platform, we included a thanks concept in response to an update. This inspired a larger idea of potentially gamifying the standup process, or adopting a concept similar to karma. Naturally, with positive feedback, do we want negative feedback as well? Would limiting one user to one thanks per time frame provide a more meaningful source of feedback? With this concept, we considered various options, including:
+Should thanks be private or public?
+Should thanks be a limited resource?
+Should there be negative feedback?
+Should a more general karma concept be adopted?</p>
+
+<p>We decided to have the thanks concept be private. While having a public count of thanks can be an interesting metric that could be helpful to people working in groups to find people that are quality team members, this could negatively affect users of the application. Similar to social media likes, having a public count of affirmation can lead to comparison and unnecessary competition. Additionally, since this is used in the work context, if potential employers were to use this metric for evaluation of team members, people may refrain from giving thanks in order to inflate their own number. For this reason, we decided to keep thanks private to stay true to its purpose of providing positive encouragement.</p>
+
+<p>We decided that thanks would not be a limited resource and instead would function similarly to a “like” on a social media post. While a more limited resource of thanks might increase its significance and feel more rewarding to receive, it limits the amount of feedback that is given generally. We feel that it is more important to have more interaction, rather than giving a larger reward.</p>
+
+<p>We decided on not including negative feedback. While it makes the feedback system more holistic and encourages diverse thoughts, this feature could induce a negative experience for users. Especially because Standup is used for work projects, negative feedback in response to updates might not be appropriate. We do not want the application to potentially be misused.</p>
+
+<p>We decided that we would stick with a more by-update thanks system, rather than a general karma system. With a karma system, it would encourage people to use the application often. However, it also allows for people to exploit the application and post many updates that do not have any meaningful content just to increase their karma score if every update gave some amount of karma. Overall, for the purpose of our application to encourage more updates from a team member, having a simple by-update thanks system seemed more appropriate, especially if there is no negative feedback.</p>
+
+<h4 id="poking-frequencies">Poking Frequencies</h4>
+<p>Inspired by the Facebook poking feature, we wanted a way of increasing interaction and reminding users to post updates. However, Facebook’s poking feature can easily be spammy.  The main tradeoffs taken into consideration were questions on how to reduce the spammy nature of pokes and make them more meaningful. Some options we considered were:
+Limit poking per day/week
+Enable poking based on the most recently posted update
+Enable poking only if they haven’t been poked already</p>
+
+<p>In the end, we decided on combining all of the options to stay true to its purpose. Since poking’s intention is to remind users to post an update, it only makes sense to enable poking if the user hasn’t posted something. While limiting poking based on a time frame is a good way to reduce spam, it does not reduce frustration of having already updated and still receiving a notification. However, we also want to be able to poke someone multiple times if one poke was not effective. We also don’t want to poke someone if they have already been reminded by someone. Thus the combination of all of these ideas provide a way for users to poke another user only if they haven’t posted recently, haven’t already been poked by someone else, and haven’t already been poked recently.</p>
+
+<h4 id="enforcing-timely-updates">Enforcing Timely Updates</h4>
+<p>Our initial vision was that the application would provide more structure to the update process by enforcing a timeline that updates should be sent, for example every week. This would help encourage users to update more often. However, this imposes a strict timeline that may not fit for some projects. We were considering:
+Enforcing timely updates
+Not enforcing updates by some timeline
+In the end, we decided on not enforcing updates by a time range specified in the application. While this would have served well to encourage more updates, this did not allow for the flexibility of variable deadlines, which occurs often in both student project settings and workplace settings. Additionally, we were able to still somewhat enforce more timely updates with the poke feature so that there is still an avenue for users to remind others to post updates.</p>
+
+<h2 id="project-plan">Project plan</h2>
+<p>The functionality you plan to have completed for the three milestones. For the alpha release, we expect very minimal functionality akin to the A5/A6 milestones — sufficient to check that your development process is working, and that you are able to integrate work from all team members. For the beta release, you should be able to demonstrate that the core concepts of your app are ready for use by multiple users (but things do not need to be feature-complete nor fully polished). For the final build, we expect all features of your design to be fully implemented, polished, and deployed for the world to use.</p>
+
+<h4 id="functionalities-per-milestone">Functionalities per milestone</h4>
+<p>Alpha: User</p>
+
+<p>Beta: Project, Update, Views, Tags</p>
+
+<p>Final: all concepts (all previous, plus Eyes Wanted, Thanks, Poke)</p>
+
+<h4 id="tasks">Tasks</h4>
+<p>Alpha</p>
+<ul>
+  <li>Create team repo (11/20) Ophelia</li>
+  <li>Set up mongoDB and User schema (11/21) Ophelia</li>
+  <li>Set up server and get it running (11/21) Ophelia</li>
+  <li>Get simple frontend running (11/21) Ivy</li>
+  <li>Implement user backend (11/22) Ophelia</li>
+  <li>Endpoint to create user</li>
+  <li>Endpoint to edit/delete user</li>
+  <li>Endpoint to sign-in/sign-out/get signed-in user</li>
+  <li>Implement user frontend (11/22) Amy</li>
+  <li>Form to sign-up</li>
+  <li>Form to sign-in</li>
+  <li>Form to edit account/delete account</li>
+  <li>Deployment to Vercel (11/23) Esther</li>
+</ul>
+
+<p>Beta</p>
+
+<ul>
+  <li>Backend
+    <ul>
+      <li>Set up Project schema/middleware/helpers (11/28) Ophelia</li>
+      <li>Implement endpoints for project (11/29) Ophelia</li>
+      <li>Implement backend for updates (11/30) Ivy</li>
+    </ul>
+  </li>
+  <li>Frontend
+    <ul>
+      <li>Implement Project Dashboard (12/4) Amy
+        <ul>
+          <li>Form for adding project</li>
+          <li>Pending invites modal</li>
+        </ul>
+      </li>
+      <li>Implement project view sidebar for navigating between users/weeks/tags (12/4) Ivy</li>
+      <li>Implement user view (12/3) Esther</li>
+      <li>Implement weekly view (12/3) Esther</li>
+      <li>Implement tag view (12/3) Esther</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Final</p>
+
+<ul>
+  <li>Backend
+    <ul>
+      <li>Implement ability to edit tags (12/13) Ivy</li>
+      <li>Implement backend for eyes wanted (12/6) Esther</li>
+      <li>Implement backend for pokes (12/7) Ophelia</li>
+      <li>Implement backend for thanks (12/8) Amy</li>
+      <li>Implement backend for comments (12/11) Ivy</li>
+    </ul>
+  </li>
+  <li>Frontend
+    <ul>
+      <li>Implement home page – reading list, pokes, thanks (12/13) Amy</li>
+      <li>Implement ability to flag updates with eyes wanted on creation (12/7) Esther</li>
+      <li>Implement ability to remove eyes-wanted updates from reading list (12/7) Esther</li>
+      <li>Pokes: ability to poke, view pokes (12/8) Ophelia</li>
+      <li>Thanks: ability to thank, view thanks (12/9) Amy</li>
+      <li>Comments: ability to add comments, view comments (12/12) Ivy</li>
+      <li>Ability to edit existing updates (including tags) (12/13) Ophelia</li>
+      <li>Ability to edit project tags (edge case: removing tags from updates) (12/13) Ophelia</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="plan-for-when-things-go-wrong">Plan for when things go wrong</h4>
+<p>For regular debugging problems or minor design decisions to make, we’ll plan to ask the group if anyone is available to help or conduct an asynchronous meeting to make decisions, moving along as long as one other person agrees. If necessary, we will not implement some additional features such as comments, as they are not central to the application and of course sacrifice styling the web page in favor of core components. Some features that we may choose to omit if necessary include editing tags and editing updates. Concept-wise, we may choose to omit the concepts of comments, thanks, pokes, and eyes wanted in the respective order if running out of time (meaning we prioritize implementing the latter first).</p>
+
+        </div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    
+  
+
+  
+    <a class="page-next" href="../final3/index.html">
+      <h4 class="page-pagination-label">Next</h4>
+      <span class="page-pagination-title">
+        Final Project Part III: User testing
+ <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main></html>

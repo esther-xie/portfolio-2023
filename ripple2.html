@@ -1,0 +1,49 @@
+<!-- https://thebookofshaders.com/04/ -->
+<body>
+    <div id="container"></div>
+    <link rel="stylesheet" type="text/css" href="css/style-ripple2.css">
+
+    <!-- Unfortunately, unless we use Three.js loaders, the shader code needs to be embedded in the HTML -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4( position, 1.0 );
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        // Default uniforms in 'Book of Shaders' (platform-specific)
+        uniform vec2 u_resolution;   // screen size in pixels
+        uniform vec2 u_mouse;		 // mouse location (XY) and click (ZW) in pixels
+        uniform float u_time;		 // elapsed program time in seconds
+
+
+        // Main fragment function
+        void main() {
+            // Center of the screen
+            vec2 center = 0.5 * u_resolution;
+            
+        //     // Distance from this pixel to the center
+        //     float dist = length(gl_FragCoord.xy - center);
+            
+            // Distance from this pixel to the mouse
+            float dist = length(gl_FragCoord.xy - u_mouse.xy);
+            
+
+            // Compute gray value based on a modulated sin wave
+            float gray = 1.884 * (cos(0.0004*dist * dist - u_time) + 2.016);
+            float gray2 = 0.420 * (sin(0.0004*dist * dist - u_time) + 1.504);
+            float gray3 = 1.068 * (cos(0.0004*dist * dist - u_time) + 0.664);
+
+
+            // See graphs here: https://graphtoy.com/?f1(x,t)=mix(1,0,x/5)&v1=true&f2(x,t)=1-smoothstep(0,5,x)&v2=true&f3(x,t)=&v3=false&f4(x,t)=&v4=false&f5(x,t)=&v5=false&f6(x,t)=&v6=false&grid=1&coords=0,0,12
+            
+            // Set the RGBA color of this pixel
+            // by assigning a vec4 value to the built-in `gl_FragColor` variable
+            gl_FragColor = vec4(gray, gray2, gray3, 1.000);
+        }
+    </script>
+
+    <!-- <script src="lib/three.js"></script> -->
+    <script src="js/three.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>

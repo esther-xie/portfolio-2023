@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>Dear Garden</title>
+
+  <script type="text/javascript" src="js/p5.js"></script>
+  <script type="text/javascript" src="js/p5.collide2d.js"></script>
+  <script type="text/javascript" src="js/aahs-garden1.js"></script>
+
+  <script type="text/javascript" src="js/sketch-garden1.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+  
+  <!-- Note how no canvas is needed here, p5.js will place one -->
+  <!-- If you want finer control of where your canvas element goes, see: https://github.com/processing/p5.js/wiki/Positioning-your-canvas#relocating-the-canvas -->
+
+
+  <!-- Use full p5.js library when developing locally -->
+ 
+  <!-- Switch to minified version when deploying for production/use -->
+  <!-- <script type="text/javascript" src="js/p5.min.js"></script> -->
+  
+<div class="container">
+<div id="sketch-holder"></div>
+
+<div class="control">
+  <div class="flower">
+    <h3> Flower </h3>
+    <label for="diameter">Size</label>
+    <input class="slider" type="range" min="0" max="100" value="50" id="diameter" />
+    <label for="arm">Stem number</label>
+    <input class="slider" type="range" min="0" max="100" value="50" id="arm" />
+    <label for="pedal">Petal size</label>
+    <input class="slider" type="range" min="0" max="100" value="50" id="pedal" />
+  </div>
+
+  <div class="color">
+    <h3> Color </h3>
+    <label for="R">R</label>
+    <input class="slider" type="range" min="0" max="255" value="0" id="R" />
+    <label for="G">G</label>
+    <input class="slider" type="range" min="0" max="255" value="0" id="G" />
+    <label for="B">B</label>
+    <input class="slider" type="range" min="0" max="255" value="0" id="B" />
+  </div>
+  </div>
+</div>
+</body>
+
+</html>
